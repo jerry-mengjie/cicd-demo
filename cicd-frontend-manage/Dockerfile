@@ -3,7 +3,7 @@ FROM nginx:alpine
 # 设置工作目录
 WORKDIR /app
 # 复制
-COPY ./dist .
+COPY ./cicd-frontend-manage/dist .
 
 # 创建 nginx 配置文件
 RUN echo "server { \
