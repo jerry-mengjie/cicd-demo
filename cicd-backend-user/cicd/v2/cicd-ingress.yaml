@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cicd-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: service-cicd-frontend-manage
+              port:
+                number: 80
+        - path: /api-user
+          pathType: Prefix
+          backend:
+            service:
+              name: service-cicd-backend-user
+              port: 
+                number: 8091
+        - path: /api-news
+          pathType: Prefix
+          backend:
+            service:
+              name: service-cicd-backend-news
+              port: 
+                number: 8092
+        - path: /swagger/user
+          pathType: Prefix
+          backend:
+            service:
+              name: service-cicd-backend-user
+              port: 
+                number: 8091
+        - path: /swagger/news
+          pathType: Prefix
+          backend:
+            service:
+              name: service-cicd-backend-news
+              port: 
+                number: 8092

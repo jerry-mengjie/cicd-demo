@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-frontend
+spec:
+  selector:
+    matchLabels:
+      app: cicd-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cicd-frontend
+    spec:
+      imagePullSecrets:
+      - name: private-registry
+      containers:
+      - name: cicd-frontend
+        image: localhost:8082/cicd-frontend:20221213160253

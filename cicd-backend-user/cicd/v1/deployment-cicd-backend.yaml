@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-backend
+spec:
+  selector:
+    matchLabels:
+      app: cicd-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+       app: cicd-backend 
+    spec:
+      imagePullSecrets:
+      - name: private-registry   
+      containers:
+      - name: cicd-backend
+        imagePullPolicy: Always
+        image: localhost:8082/cicd-backend:20221213160251
+        ports:
+        - containerPort: 7001
+        env:
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: host
+        - name: MYSQL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: port   
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: database  
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-auth
+              key: username  
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-auth
+              key: password                  

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicd-mysql
+  template:
+    metadata:
+      labels:
+        app: cicd-mysql  
+    spec:
+      containers:
+      - name: cicd-mysql
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        args:
+        - "--ignore-db-dir=lost+found"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql #挂载到docker容器内的目录
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-auth
+              key: password    
+      volumes:
+      - name: mysql-data
+        hostPath:
+          path: /var/lib/mysql #宿主机里的目录
+          type: Directory   
