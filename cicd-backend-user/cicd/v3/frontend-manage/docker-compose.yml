@@ -1,0 +1,16 @@
+version: "3.0"
+
+# 使用提前定义好的外部网络
+networks:
+  trading-wtf-frontend-net:
+    external: true
+  
+services:
+  frontend-manage:
+    container_name: frontend-manage
+    restart: always
+    networks: 
+      - trading-wtf-frontend-net
+    image: localhost:8082/frontend-manage:latest
+    ports:
+      - "8097:80"
