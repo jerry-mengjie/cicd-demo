@@ -1,0 +1,42 @@
+name: Deploy with Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Build backend-user dist
+        working-directory: cicd-backend-user
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build backend-news dist
+        working-directory: cicd-backend-news
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build frontend dist
+        working-directory: cicd-frontend-manage
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy containers
+        run: |
+          docker compose down
+          docker compose up -d --build
