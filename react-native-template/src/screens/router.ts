@@ -11,6 +11,11 @@ export default [
     component: lazy(() => import('./demo/DetailScreen')),
     options: {}, // 头部配置栏，可看下面注释
   },
+  {
+    name: 'User',
+    component: lazy(() => import('./demo/UserScreen')),
+    options: { headerShown: true, headerTitle: '用户列表' },
+  },
 ];
 
 /* <Stack.Screen

@@ -1,7 +1,7 @@
 import { Toast } from '@ant-design/react-native';
 import Loading from '@/components/Loading';
 
-const baseUrl = 'https://adm-wb.httester.com';
+const baseUrl = 'http://localhost:8092';
 let loadingCount = 0; // 统计需要loading的请求，还没返回的数量
 
 /**
@@ -40,12 +40,7 @@ function Fetch(method: string, url = '', body: any = {}, isJson = true, isError 
       })
       .then((res) => {
         const { code, data, message } = res;
-        if (code === '000000') {
-          resolve(data);
-        } else {
-          isError && showError(message);
-          reject(data);
-        }
+        resolve(data)
       })
       .catch((err) => {
         const message = err.message || err.errMsg;

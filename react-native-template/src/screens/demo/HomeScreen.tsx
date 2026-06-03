@@ -18,6 +18,8 @@ function HomeScreen({ navigation, counterStore }: any) {
       <Text>🏠 Home Screen</Text>
       <Text>1、路由传参</Text>
       <Button title="Go to Details" onPress={() => navigation.navigate('Detail', { userId: 42 })} />
+      <Text>1.1、用户列表</Text>
+      <Button title="Go to User List" onPress={() => navigation.navigate('User')} />
       <Text>2、切换多语言</Text>
       <Button title={t('change_language')} onPress={toggleLanguage} />
       <Text>3、store状态应用</Text>
